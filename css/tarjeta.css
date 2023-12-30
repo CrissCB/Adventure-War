@@ -1,0 +1,24 @@
+.tarjetaF{
+    width: auto;
+}
+
+#div_modal{
+    background-color: black;
+}
+
+.uk-modal-header, .uk-modal-footer{
+    background-color: black;
+}
+
+@media screen and (max-width:350px) {
+    .txt{
+        font-size: 4px;
+        color: aqua;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .tarjetaF{
+        height: 80px;
+    }
+}
