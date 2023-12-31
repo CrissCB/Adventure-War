@@ -30,28 +30,33 @@
             $i++;
         }
 
-        $id_personaje = 0;
-
-        if ($data[1] == 0) {
-            $sql = "SELECT id_personajes FROM personajes WHERE LOWER(nombre) LIKE '%caballero%' LIMIT 1";
-        } elseif ($data[1] == 1) {
-            $sql = "SELECT id_personajes FROM personajes WHERE LOWER(nombre) LIKE '%vikingo%' LIMIT 1";
-        } else {
-            $sql = "SELECT id_personajes FROM personajes WHERE LOWER(nombre) LIKE '%arquero%' LIMIT 1";
-        }
-
-        $datos = mysqli_query($bd,$sql);
-        $id_personaje = mysqli_fetch_array($datos);
-
-        $sql = "INSERT INTO partida_personaje(id_pp, personaje, vida, defensa, ataque) VALUES('$id_partida', '$id_personaje[0]', 50, 10, 20)";
-
-        $datos = mysqli_query($bd,$sql);
-        
-        $sql = "UPDATE partidas SET personaje = '$id_partida' WHERE id_partida = '$id_partida'";
+        $sql = "
+            SELECT
+                personajes.nombre,
+                partida_personaje.vida,
+                partida_personaje.defensa,
+                partida_personaje.ataque,
+                partida_personaje.metal,
+                partida_personaje.elixir,
+                partida_personaje.corazon,
+                partida_personaje.colmillo
+            FROM 
+            partida_personaje INNER JOIN personajes on personaje=id_personajes
+            WHERE id_pp = $id_partida
+        ";
 
         $datos = mysqli_query($bd,$sql);
+        $arr = mysqli_fetch_array($datos);
 
-        echo("exito");
+        $resultado = array_map(function($elemento) {
+            return $elemento;
+        }, $arr);
+    
+        $nick_name = $_SESSION['xnickname'];
+
+        $resultado['nickname'] = $nick_name;
+
+        echo json_encode(['resultado' => $resultado]);
 
         mysqli_close($bd);
     }

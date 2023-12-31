@@ -30,24 +30,7 @@
             $i++;
         }
 
-        $id_personaje = 0;
-
-        if ($data[1] == 0) {
-            $sql = "SELECT id_personajes FROM personajes WHERE LOWER(nombre) LIKE '%caballero%' LIMIT 1";
-        } elseif ($data[1] == 1) {
-            $sql = "SELECT id_personajes FROM personajes WHERE LOWER(nombre) LIKE '%vikingo%' LIMIT 1";
-        } else {
-            $sql = "SELECT id_personajes FROM personajes WHERE LOWER(nombre) LIKE '%arquero%' LIMIT 1";
-        }
-
-        $datos = mysqli_query($bd,$sql);
-        $id_personaje = mysqli_fetch_array($datos);
-
-        $sql = "INSERT INTO partida_personaje(id_pp, personaje, vida, defensa, ataque) VALUES('$id_partida', '$id_personaje[0]', 50, 10, 20)";
-
-        $datos = mysqli_query($bd,$sql);
-        
-        $sql = "UPDATE partidas SET personaje = '$id_partida' WHERE id_partida = '$id_partida'";
+        $sql = "DELETE FROM partida_personaje WHERE id_pp=$id_partida";
 
         $datos = mysqli_query($bd,$sql);
 

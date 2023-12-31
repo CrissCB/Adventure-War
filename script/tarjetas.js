@@ -36,45 +36,78 @@ function init() {
 }
 
 function paintTarget() {
-    let codigo = ""
-    
+
     if (opt[0].includes("0")) {
-        codigo = `
-                <img src="https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/tarjetas%2Ftarjeta.png?alt=media&token=e5ea400a-f88a-41d9-b6a3-1931b1e1447d" alt="tarjeta" class="tarjetaF">
-                <div class="uk-overlay uk-light uk-position-cover uk-padding-small uk-text-right uk-text-small">
-                </div>
-            `
-        parrafo1.innerHTML = codigo;
+        parrafo1.innerHTML = tarjetaVacia();
     }else{
-        
+        let data = [0]
+
+        fetch('http://localhost/AdventureWar/recursos/cargarTarjeta.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data:data })
+        })
+        .then(response => response.json())
+        .then(parseData => {
+            const personaje = parseData.resultado
+            parrafo1.innerHTML = llenarTarjetas(personaje);
+        })
+        .catch(error => {
+            console.error('Error:', error)
+        });
     }
 
     if (opt[1].includes("0")) {
-        codigo = `
-                <img src="https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/tarjetas%2Ftarjeta.png?alt=media&token=e5ea400a-f88a-41d9-b6a3-1931b1e1447d" alt="tarjeta" class="tarjetaF">
-                <div class="uk-overlay uk-light uk-position-cover uk-padding-small uk-text-right uk-text-small">
-                </div>
-            `
-        parrafo2.innerHTML = codigo;
+        parrafo2.innerHTML = tarjetaVacia();
     }else{
+        let data = [1]
 
+        fetch('http://localhost/AdventureWar/recursos/cargarTarjeta.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data:data })
+        })
+        .then(response => response.json())
+        .then(parseData => {
+            const personaje = parseData.resultado
+            parrafo2.innerHTML = llenarTarjetas(personaje);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
-    if (opt[2].includes("0")) {
-        codigo = `
-                <img src="https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/tarjetas%2Ftarjeta.png?alt=media&token=e5ea400a-f88a-41d9-b6a3-1931b1e1447d" alt="tarjeta" class="tarjetaF">
-                <div class="uk-overlay uk-light uk-position-cover uk-padding-small uk-text-right uk-text-small">
-                </div>
-            `
-        parrafo3.innerHTML = codigo;
-    }else{
 
+    if (opt[2].includes("0")) {
+        parrafo3.innerHTML = tarjetaVacia();
+    }else{
+        let data = [2]
+
+        fetch('http://localhost/AdventureWar/recursos/cargarTarjeta.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data:data })
+        })
+        .then(response => response.json())
+        .then(parseData => {
+            const personaje = parseData.resultado
+            parrafo3.innerHTML = llenarTarjetas(personaje);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 }
 
 function partidaSelect(id) {
     let txt = ""
 
-    if ( parseInt(opt[parseInt(id)]) == 0 ) {
+    if ( parseInt(opt[id]) == 0 ) {
         txt = `
                 <button class="uk-modal-close-default" type="button" uk-close></button>
                 <div class="uk-modal-header">
@@ -123,81 +156,177 @@ function partidaSelect(id) {
                 </div>
             `
 
+        divM.innerHTML = txt
+        modal.show()
+
+        let focus = 0
+
+        const crearbtn = document.querySelector("#btnCrear")
+        const antbtn = document.querySelector("#ant_img")
+        const sigbtn = document.querySelector("#sig_img")
+
+        antbtn.addEventListener("click", function() {
+            focus -= 1
+            console.log(focus)
+        })
+
+        sigbtn.addEventListener("click", function() {
+            focus += 1
+            console.log(focus)
+        })
+
+        crearbtn.addEventListener("click", function() {
+            let data = [id, focus]
+
+            fetch('http://localhost/AdventureWar/recursos/crearNivel.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data:data })
+            })
+            .then(response => response.text())
+            .then(text => {
+                if (text.includes("exito")) {
+
+                    window.location.href = `http://localhost/AdventureWar/recursos/router/niveles.php?level=`+encodeURIComponent(id)
+
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        })
+    }else{
+        let data = [id]
+
+        fetch('http://localhost/AdventureWar/recursos/cargarTarjeta.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data:data })
+        })
+        .then(response => response.json())
+        .then(parseData => {
+            const personaje = parseData.resultado
+            txt = `
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Partida ${id+1}</h2>
+                    </div>
+                    <div class="uk-modal-body">
+                        <p class="uk-margin-small-right" >
+                            Vida
+                            <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fvida.png?alt=media&token=eda57464-7d30-4bb7-ab09-5bceafcac834);"></span>
+                            ${personaje.vida} - Defensa
+                            <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fdefensa.png?alt=media&token=8f504f29-2904-43c2-89c8-a44205939fa8);"></span>
+                            ${personaje.defensa} - Ataque
+                            <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fataque.png?alt=media&token=ff3ec0d1-17dd-4c65-ba17-c2591737189e);"></span>
+                            ${personaje.ataque} <br> Metal para forjar
+                            <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fmetal.png?alt=media&token=aa7403f1-9503-4d2c-b2b9-2e1e0734c559);"></span>
+                            ${personaje.metal} - Pociones de vida
+                            <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fpociones.png?alt=media&token=aedf5c4e-236b-4eda-8f02-80bc70e4791f);"></span>
+                            ${personaje.elixir} <br> Corazones de vitalidad
+                            <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcorazones.png?alt=media&token=0dd33f06-6a7d-493d-8c17-b7e7d0511220);"></span>
+                            ${personaje.corazon} - Colmillos de dragon
+                            <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcolmillo.png?alt=media&token=3184c449-6e68-4740-be06-c0178fc770c3);"></span>
+                            ${personaje.colmillo}
+                        </p> 
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default" type="button" id="btnBorrar">Borrar</button>
+                        <button class="uk-button uk-button-primary" type="button" id="btnEntrar">Entrar</button>
+                    </div>
+                `
+
             divM.innerHTML = txt
             modal.show()
 
-            let focus = 0
+            const btn_Entrar = document.querySelector("#btnEntrar")
 
-            const crearbtn = document.querySelector("#btnCrear")
-            const antbtn = document.querySelector("#ant_img")
-            const sigbtn = document.querySelector("#sig_img")
+            UIkit.util.on('#btnBorrar', 'click', function (e) {
+                e.preventDefault();
+                e.target.blur();
+                UIkit.modal.confirm('Confirme para borrar su partida. Recuerde que todo su progreso sera eliminado asi como su personaje!').then(function () {
+                    let data = [id]
+        
+                    fetch('http://localhost/AdventureWar/recursos/eliminarPartida.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ data:data })
+                    })
+                    .then(response => response.text())
+                    .then(text => {
+                        if (text.includes("exito")) {
+        
+                            modal.hide();
+        
+                            if (id == 0) {
+                                parrafo1.innerHTML = tarjetaVacia()
+                            }else if (id == 1) {
+                                parrafo2.innerHTML = tarjetaVacia()
+                            } else {
+                                parrafo3.innerHTML = tarjetaVacia()
+                            }
 
-            antbtn.addEventListener("click", function() {
-                focus -= 1
-                console.log(focus)
+                            opt[id] = "0"
+        
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }, function () {});
+            });
+
+            btn_Entrar.addEventListener("click", function() {
+                window.location.href = `http://localhost/AdventureWar/recursos/router/niveles.php?level=`+encodeURIComponent(id)
             })
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}
 
-            sigbtn.addEventListener("click", function() {
-                focus += 1
-                console.log(focus)
-            })
+function llenarTarjetas(personaje) {
+    let urlTarjeta = ""
+    if (personaje.nombre.includes("rquero")) {
+        urlTarjeta = "https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/tarjetas%2FtarjetaArquero.png?alt=media&token=98917c90-1f02-4e01-9b85-d047871f3f79"
+    } else if (personaje.nombre.includes("ikingo")) {
+        urlTarjeta = "https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/tarjetas%2FtarjetaVikingo.png?alt=media&token=a454750d-5b47-4945-898c-932ca2f16335"
+    } else {
+        urlTarjeta = "https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/tarjetas%2FtarjetaCaballero.png?alt=media&token=124fa186-dc45-46b8-a7e4-b43fbd203178"
+    }
 
-            crearbtn.addEventListener("click", function() {
-                let data = [id, focus]
+    const codigo = `
+        <img src="${urlTarjeta}" alt="tarjeta" class="tarjetaF">
+        <div class="uk-overlay uk-light uk-position-cover uk-padding-small uk-text-right uk-text-small">
+            <p>
+                <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fvida.png?alt=media&token=eda57464-7d30-4bb7-ab09-5bceafcac834);"></span>${personaje.vida} - 
+                <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fdefensa.png?alt=media&token=8f504f29-2904-43c2-89c8-a44205939fa8);"></span>${personaje.defensa} - 
+                <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fataque.png?alt=media&token=ff3ec0d1-17dd-4c65-ba17-c2591737189e);"></span>${personaje.ataque} - <br>
+                <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fmetal.png?alt=media&token=aa7403f1-9503-4d2c-b2b9-2e1e0734c559);"></span>${personaje.metal} - 
+                <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fpociones.png?alt=media&token=aedf5c4e-236b-4eda-8f02-80bc70e4791f);"></span>${personaje.elixir} - 
+                <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcorazones.png?alt=media&token=0dd33f06-6a7d-493d-8c17-b7e7d0511220);"></span>${personaje.corazon} - 
+                <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcolmillo.png?alt=media&token=3184c449-6e68-4740-be06-c0178fc770c3);"></span>${personaje.colmillo}
+            </p>
+        </div>
+    `
 
-                fetch('http://localhost/AdventureWar/recursos/crearNivel.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ data:data })
-                })
-                .then(response => response.text())
-                .then(text => {
-                    if (text.includes("exito")) {
+    return codigo
+}
 
-                        window.location.href = `http://localhost/AdventureWar/recursos/router/niveles.php`
-
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            })
-    }else{
-        txt = `
-                <button class="uk-modal-close-default" type="button" uk-close></button>
-                <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">Partida</h2>
-                </div>
-                <div class="uk-modal-body">
-                    <p class="uk-margin-small-right" >
-                        Vida
-                        <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fvida.png?alt=media&token=eda57464-7d30-4bb7-ab09-5bceafcac834);"></span>
-                        100 - Defensa
-                        <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fdefensa.png?alt=media&token=8f504f29-2904-43c2-89c8-a44205939fa8);"></span>
-                        50 - Ataque
-                        <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fataque.png?alt=media&token=ff3ec0d1-17dd-4c65-ba17-c2591737189e);"></span>
-                        50 <br> Metal para forjar
-                        <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fmetal.png?alt=media&token=aa7403f1-9503-4d2c-b2b9-2e1e0734c559);"></span>
-                        20 - Pociones de vida
-                        <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fpociones.png?alt=media&token=aedf5c4e-236b-4eda-8f02-80bc70e4791f);"></span>
-                        20 <br> Corazones de vitalidad
-                        <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcorazones.png?alt=media&token=0dd33f06-6a7d-493d-8c17-b7e7d0511220);"></span>
-                        5 - Colmillos de dragon
-                        <span class="uk-icon uk-icon-image" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcolmillo.png?alt=media&token=3184c449-6e68-4740-be06-c0178fc770c3);"></span>
-                        5
-                    </p> 
-                </div>
-                <div class="uk-modal-footer uk-text-right">
-                    <button class="uk-button uk-button-default" type="button" id="btnBorrar">Borrar</button>
-                    <button class="uk-button uk-button-primary" type="button" id="btnEntrar">Entrar</button>
+function tarjetaVacia() {
+    const codigo = `
+                <img src="https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/tarjetas%2Ftarjeta.png?alt=media&token=e5ea400a-f88a-41d9-b6a3-1931b1e1447d" alt="tarjeta" class="tarjetaF">
+                <div class="uk-overlay uk-light uk-position-cover uk-padding-small uk-text-right uk-text-small">
                 </div>
             `
-
-            divM.innerHTML = txt
-            modal.show()
-    }
+    return codigo
 }
 
 init()

@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    session_start(); 
     $link = "http://localhost/AdventureWar/";
     $vida = "https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fvida.png?alt=media&token=eda57464-7d30-4bb7-ab09-5bceafcac834";
     $defensa = "https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fdefensa.png?alt=media&token=8f504f29-2904-43c2-89c8-a44205939fa8";
@@ -18,6 +18,7 @@
 <html lang="en">
 <head>
     <?php include("../header.php"); ?>
+    <link rel="stylesheet" href="<?php echo($link)?>css/niveles.css">
 </head>
 <body>
     <div>
@@ -50,57 +51,7 @@
     <div id="offcanvas-reveal" uk-offcanvas="mode: reveal; overlay: true">
         <div class="uk-offcanvas-bar uk-flex uk-flex-column">
 
-            <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
-                <li class="uk-active"><a href="#">Crissis</a></li>
-                <li class="uk-active"><a href="#">Nivel 1</a></li>
-                <li class="uk-parent">
-                    <a href="#">Personaje</a>
-                    <ul class="uk-nav-sub">
-                        <li><a href="#">
-                            <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($vida)?>);"></span> 100
-                            <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($defensa)?>);"></span> 50
-                            <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($ataque)?>);"></span> 50
-                        </a></li>
-                    </ul>
-                </li>
-                <li class="uk-parent">
-                    <a href="#">Objetos</a>
-                    <ul class="uk-nav-sub">
-                        <li><a href="#">
-                            <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($metal)?>);"></span> 20
-                            <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($pociones)?>);"></span> 20
-                            <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($corazones)?>);"></span> 5
-                            <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($colmillos)?>);"></span> 5
-                        </a></li>
-                    </ul>
-                </li>
-                <li class="uk-nav-divider"></li>
-                <li class="uk-nav-header">Forja</li>
-                <li>
-                    <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($defensa)?>);"></span>
-                    <label class="uk-text-small">50</label>
-                    <button class="uk-button uk-button-default uk-button-small"><</button>
-                    <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($metal)?>);"></span>
-                    <label class="uk-text-small">20</label>
-                </li>
-                <li>
-                    <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($ataque)?>);"></span>
-                    <label class="uk-text-small">50</label>
-                    <button class="uk-button uk-button-default uk-button-small"><</button>
-                    <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($colmillos)?>);"></span>
-                    <label class="uk-text-small">5</label>
-                </li>
-                <li class="uk-nav-header">Vitalidad</li>
-                <li>
-                    <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($vida)?>);"></span>
-                    <label class="uk-text-small">100</label>
-                    <button class="uk-button uk-button-default uk-button-small"><</button>
-                    <span class="uk-icon uk-icon-image" style="background-image: url(<?php echo($corazones)?>);"></span>
-                    <label class="uk-text-small">5</label>
-                </li>
-                <li class="uk-nav-divider"></li>
-                <li class="uk-text-small"><a href="#" uk-toggle="target: #modal_dialog"><span class="uk-margin-small-right" uk-icon="icon: question"></span>Informacion</a></li>
-            </ul>
+            <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical" id="info_pj"></ul>
 
         </div>
     </div>
@@ -123,9 +74,55 @@
         </div>
     </div>
 
-    <div class="uk-child-width-1-1 uk-grid-small" uk-grid>
-    </div>
+    <div class="uk-child-width-1-1 uk-margin-large-top" uk-grid id="niveles_pj">
+        <div>
+            <div class=" uk-child-width-1-3@s uk-flex uk-flex-middle uk-flex-center uk-text-center" uk-grid>
+                <div>
+                    <div class="uk-card uk-card-secondary uk-card-body">
+                        <h2 class="uk-card-title">
+                            1
+                        </h2>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-card uk-card-secondary uk-card-body">
+                        <h2 class="uk-card-title">
+                            <img class="img_candado" src="https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcandado.png?alt=media&token=cbc12ae9-40a3-4762-8957-4c1a2fa33def" alt="">
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div>
+            <div class="uk-child-width-1-3@s uk-flex uk-flex-middle uk-flex-center uk-text-center" uk-grid>
+                <div>
+                    <div class="uk-card uk-card-secondary uk-card-body">
+                        <h2 class="uk-card-title">
+                            <img class="img_candado" src="https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcandado.png?alt=media&token=cbc12ae9-40a3-4762-8957-4c1a2fa33def" alt="">
+                        </h2>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-card uk-card-secondary uk-card-body">
+                        <h2 class="uk-card-title">
+                            <img class="img_candado" src="https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/icons%2Fcandado.png?alt=media&token=cbc12ae9-40a3-4762-8957-4c1a2fa33def" alt="">
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer class="uk-margin-large-top uk-width-1-1">
+        <div class="uk-text-center">
+            <div class="uk-margin-right@m uk-flex-bottom uk-text-right@m" id="prueba">
+                <p>&copy; 2023 Por Cristian Burgos y Gabriel Peña. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="<?php echo($link)?>script/niveles.js"></script>
     <?php include("../script.php")?>
 </body>
 </html>
