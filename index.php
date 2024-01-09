@@ -5,16 +5,19 @@
 <html lang="en">
 <head>
     <?php include("recursos/header.php"); ?>
+    <link rel="stylesheet" href="<?php echo($link);?>css/login.css">
 </head>
 <body>
-    <div class="uk-text-center uk-child-width-1-1" uk-grid>
-        <div class="uk-margin-large-top">
-            <h1>Adventure war</h1>
+    <div class="uk-text-center uk-child-width-1-1 uk-background-fixed uk-background-center-center" uk-grid id="body">
+        <div class="uk-flex uk-flex-center uk-flex-middle uk-margin-large-top">
+            <div class="h1_title">
+                <h1>Adventure war</h1>
+            </div>
         </div>
 
         <div class="uk-margin-large-top">
             <div class="uk-flex uk-flex-center">
-                <div class="uk-card uk-card-default uk-card-body uk-width-2-5@s">
+                <div class="uk-card uk-card-default uk-card-body uk-width-2-5@s" id="div_form">
                     <form action="<?php echo($link);?>recursos/validar.php" method="post">
                         <fieldset class="uk-fieldset">
                     
@@ -36,11 +39,11 @@
                             
                             <div class="uk-margin">
                                 <div class="uk-inline">
-                                    <button class="uk-button uk-button-default" type="submit">Ingresar</button>
+                                    <button class="uk-button uk-button-default" type="submit" id="btn_ok">Ingresar</button>
                                 </div>
                             </div>
 
-                            <p class="uk-text-meta">¿No estas registrado? 
+                            <p class="uk-text-meta" id="p_form">¿No estas registrado? 
                                 <a href="<?php echo($link);?>recursos/router/registro.php" class="uk-button-text">ingrese aqui.</a>
                             </p>
 
@@ -68,7 +71,7 @@
             </div>
         </div>
 
-        <footer>
+        <footer id="p_copy">
             <div class="uk-text-center">
                 <div class="uk-margin-right@s uk-flex-bottom uk-text-right@s">
                     <p>&copy; 2023 Por Cristian Burgos y Gabriel Peña. Todos los derechos reservados.</p>

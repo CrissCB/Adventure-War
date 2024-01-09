@@ -1,0 +1,52 @@
+#body{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/recursos%2Ffondo_piedra.png?alt=media&token=5ad194e9-27c2-4729-bd62-4c0643fd3258");
+
+}
+
+#nav_bar{
+    background-color: #484849;
+}
+
+#nav_bar a, #prueba, .uk-modal-title, .uk-modal-body{
+    color: white;
+}
+
+.uk-legend{
+    color: black;
+}
+
+.uk-card-body{
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.uk-modal-header, .uk-modal-footer, #div_modal, .uk-modal-body{
+    background-color: #3a3a3a;
+}
+
+#btnBorrar, .uk-button-default{
+    background-color: #eb3e3e;
+    color: white;
+    border-color: #eb3e3e;
+}
+
+#prueba{
+    background: #0f0f0f;
+}
+
+#nav_bar a:hover{
+     background: rgb(72,72,73);
+background: linear-gradient(180deg, rgba(72,72,73,1) 69%, rgba(146,146,146,1) 77%, rgba(72,72,73,1) 80%); 
+}
+
+#btnBorrar:hover, .uk-button-default:hover{
+    background-color: #d33a3a;
+    color: white;
+    border-color: #d33a3a;
+}
+
+@media screen and (min-height:800px) {
+    #body{
+        height: 100vh
+    }
+}

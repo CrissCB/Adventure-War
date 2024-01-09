@@ -11,12 +11,12 @@
 <html lang="en">
 <head>
     <?php include("../header.php"); ?>
-    <link rel="stylesheet" href="<?php echo($link)?>css/tarjeta.css">
+    <link rel="stylesheet" href="<?php echo($link)?>css/inicio.css">
 </head>
 <body>
-    <div class="uk-child-width-1-1 uk-grid-small" uk-grid>
+    <div class="uk-child-width-1-1 uk-grid-small uk-background-fixed uk-background-center-center" uk-grid id="body">
         <div>
-            <nav class="uk-navbar-container">
+            <nav class="uk-navbar-container" id="nav_bar">
                 <div class="uk-container">
                     <div uk-navbar>
 
@@ -68,9 +68,9 @@
             <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical" id="div_modal"></div>
         </div>
 
-        <footer class="uk-margin-medium-top">
+        <footer class="uk-margin-medium-top" id="prueba">
             <div class="uk-text-center">
-                <div class="uk-margin-right@m uk-flex-bottom uk-text-right@m" id="prueba">
+                <div class="uk-margin-right@m uk-flex-bottom uk-text-right@m">
                     <p>&copy; 2023 Por Cristian Burgos y Gabriel Peña. Todos los derechos reservados.</p>
                 </div>
             </div>
