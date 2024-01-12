@@ -1,6 +1,5 @@
-#body{
+#body, #body_level{
     background-image: url("https://firebasestorage.googleapis.com/v0/b/adventure-war.appspot.com/o/recursos%2Ffondo_piedra.png?alt=media&token=5ad194e9-27c2-4729-bd62-4c0643fd3258");
-
 }
 
 #nav_bar{
@@ -10,6 +9,16 @@
 #nav_bar a, #prueba, .uk-modal-title, .uk-modal-body{
     color: white;
 }
+
+/* Juego */
+#lb_informacion_juego, #lb_vida, #btn_ataque, #btn_defensa, #btn_curar, #lb_vida_enemigo, #lb_ataque_enemigo{
+    color: white;
+}
+
+#img_accion_jugador, #img_accion_enemigo{
+    display: none;
+}
+/* Juego */
 
 .uk-legend{
     color: black;
@@ -34,6 +43,10 @@
     background: #0f0f0f;
 }
 
+.img_candado{
+    width: 80px;
+} 
+
 #nav_bar a:hover{
      background: rgb(72,72,73);
 background: linear-gradient(180deg, rgba(72,72,73,1) 69%, rgba(146,146,146,1) 77%, rgba(72,72,73,1) 80%); 
@@ -47,6 +60,12 @@ background: linear-gradient(180deg, rgba(72,72,73,1) 69%, rgba(146,146,146,1) 77
 
 @media screen and (min-height:800px) {
     #body{
+        height: 100vh
+    }
+}
+
+@media screen and (min-height:600px) {
+    #body_level{
         height: 100vh
     }
 }

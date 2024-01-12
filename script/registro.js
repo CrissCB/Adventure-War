@@ -21,7 +21,7 @@ btn1.addEventListener("submit", function(evt){
                                 <p>${data}</p>
                              </div>`
 
-                             window.location.href = "http://localhost/AdventureWar/index.php"
+            window.location.href = "http://localhost/AdventureWar/recursos/router/inicio.php"
         }else{
             div1.innerHTML = `<div class="uk-alert-danger" uk-alert>
                                 <a href class="uk-alert-close" uk-close></a>

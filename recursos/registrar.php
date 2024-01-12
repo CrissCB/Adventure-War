@@ -20,6 +20,9 @@
         
     }
     else {
+        $_SESSION["xlogin"]=$email;
+        $_SESSION["xnickname"]=$nickname;
+
         echo "Registrado con exito";
     }
     mysqli_close($bd);
